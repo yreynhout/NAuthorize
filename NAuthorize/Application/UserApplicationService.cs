@@ -58,5 +58,5 @@ namespace NAuthorize.Application {
     User ForUser(Guid userId) {
       return _userRepository.Get(new UserId(userId));
     }
-    }
+  }
 }
