@@ -1,0 +1,109 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{D430967A-8066-43DE-9458-A674FE998374}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>NAuthorize</RootNamespace>
+    <AssemblyName>NAuthorize</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AggregateSource">
+      <HintPath>..\lib\AggregateSource.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="Microsoft.CSharp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AccessDecider.cs" />
+    <Compile Include="AccessDecision.cs" />
+    <Compile Include="AccessDecisionCombinator.cs" />
+    <Compile Include="Application\Extensions.cs" />
+    <Compile Include="Application\IHandle.cs" />
+    <Compile Include="Application\IMessageAuthorizer.cs" />
+    <Compile Include="Application\IPermissionResolver.cs" />
+    <Compile Include="Application\MessageAuthorizer.cs" />
+    <Compile Include="Application\ConventionalAdministrativePermissionResolver.cs" />
+    <Compile Include="Application\RoleApplicationService.cs" />
+    <Compile Include="Application\UserGroupApplicationService.cs" />
+    <Compile Include="Application\SecurityEnvelope.cs" />
+    <Compile Include="Application\SecurityEnvelopeHandler.cs" />
+    <Compile Include="Application\UserApplicationService.cs" />
+    <Compile Include="IAccessDecider.cs" />
+    <Compile Include="IAccessDecisionCombinator.cs" />
+    <Compile Include="Messaging\Commands\AddPermissionToRole.cs" />
+    <Compile Include="Messaging\Commands\AddRole.cs" />
+    <Compile Include="Messaging\Commands\AddUserGroup.cs" />
+    <Compile Include="Messaging\Commands\AssignRoleToUserGroup.cs" />
+    <Compile Include="Messaging\Commands\AddUser.cs" />
+    <Compile Include="Messaging\Commands\AllowRolePermission.cs" />
+    <Compile Include="Messaging\Commands\ArchiveRole.cs" />
+    <Compile Include="Messaging\Commands\DisableUserGroup.cs" />
+    <Compile Include="Messaging\Commands\DenyRolePermission.cs" />
+    <Compile Include="Messaging\Commands\DisableUser.cs" />
+    <Compile Include="Messaging\Commands\AddUserToUserGroup.cs" />
+    <Compile Include="Messaging\Commands\GrantRoleToUser.cs" />
+    <Compile Include="Messaging\Commands\RemovePermissionFromRole.cs" />
+    <Compile Include="Messaging\Commands\RevokeRoleFromUserGroup.cs" />
+    <Compile Include="Messaging\Commands\RevokeRoleFromUser.cs" />
+    <Compile Include="Messaging\Commands\RemoveUserFromUserGroup.cs" />
+    <Compile Include="Messaging\Events\AddedPermissionToRole.cs" />
+    <Compile Include="Messaging\Events\AddedRole.cs" />
+    <Compile Include="Messaging\Events\AddedUserGroup.cs" />
+    <Compile Include="Messaging\Events\AddedRoleToRoleGroup.cs" />
+    <Compile Include="Messaging\Events\AddedUserAccount.cs" />
+    <Compile Include="Messaging\Events\ArchivedRole.cs" />
+    <Compile Include="Messaging\Events\DisabledUserGroup.cs" />
+    <Compile Include="Messaging\Events\DisabledUser.cs" />
+    <Compile Include="Messaging\Events\RemovedPermissionFromRole.cs" />
+    <Compile Include="Messaging\Events\RevokedRoleFromUserGroup.cs" />
+    <Compile Include="Messaging\Events\RoleGrantedToUser.cs" />
+    <Compile Include="Messaging\Events\AddedUserToUserGroup.cs" />
+    <Compile Include="Messaging\Events\RemovedUserFromUserGroup.cs" />
+    <Compile Include="Messaging\Events\RolePermissionAllowed.cs" />
+    <Compile Include="Messaging\Events\RolePermissionDenied.cs" />
+    <Compile Include="Messaging\Events\RoleRevokedFromUser.cs" />
+    <Compile Include="Metadata.cs" />
+    <Compile Include="Name.cs" />
+    <Compile Include="PermissionId.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Role.cs" />
+    <Compile Include="UserGroup.cs" />
+    <Compile Include="UserGroupId.cs" />
+    <Compile Include="RoleId.cs" />
+    <Compile Include="User.cs" />
+    <Compile Include="UserId.cs" />
+    <Compile Include="UserName.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
