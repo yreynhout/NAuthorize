@@ -18,9 +18,9 @@ namespace NAuthorize {
 
     // Behavior
 
-    public UserGroup(UserGroupId userGroupId, Name name) : this() {
+    public UserGroup(UserGroupId userGroupId, UserGroupIdentifier identifier) : this() {
       Apply(
-        new AddedUserGroup(userGroupId, name));
+        new AddedUserGroup(userGroupId, identifier));
     }
 
     public void Archive() {

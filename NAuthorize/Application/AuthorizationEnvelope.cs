@@ -1,9 +1,9 @@
 namespace NAuthorize.Application {
-  public class SecurityEnvelope<TMessage> {
+  public class AuthorizationEnvelope<TMessage> {
     readonly TMessage _message;
     readonly UserId _userId;
 
-    public SecurityEnvelope(UserId userId, TMessage message) {
+    public AuthorizationEnvelope(UserId userId, TMessage message) {
       _message = message;
       _userId = userId;
     }

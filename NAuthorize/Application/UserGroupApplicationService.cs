@@ -20,7 +20,7 @@ namespace NAuthorize.Application {
 
     public void Handle(AddUserGroup message) {
       _userGroupRepository.Add(message.UserGroupId,
-        new UserGroup(new UserGroupId(message.UserGroupId), new Name(message.Name)));
+        new UserGroup(new UserGroupId(message.UserGroupId), new UserGroupIdentifier(message.Identifier)));
     }
 
     public void Handle(DisableUserGroup message) {

@@ -3,11 +3,11 @@ using System;
 namespace NAuthorize.Messaging.Events {
   public class AddedUser {
     public readonly Guid UserId;
-    public readonly string Name;
+    public readonly Uri Identifier;
 
-    public AddedUser(Guid userId, string name) {
+    public AddedUser(Guid userId, Uri identifier) {
       UserId = userId;
-      Name = name;
+      Identifier = identifier;
     }
   }
 }

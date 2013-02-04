@@ -28,7 +28,7 @@ namespace NAuthorize.Application {
       _userRepository.Add(message.UserId,
         new User(
           new UserId(message.UserId),
-          new UserName(message.Name)));
+          new UserIdentifier(message.Identifier)));
     }
 
     public void Handle(DisableUser message) {

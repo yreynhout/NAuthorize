@@ -20,9 +20,9 @@ namespace NAuthorize {
 
     // Behavior
 
-    public User(UserId userId, UserName name) : this() {
+    public User(UserId userId, UserIdentifier identifier) : this() {
       Apply(
-        new AddedUser(userId, name));
+        new AddedUser(userId, identifier));
     }
 
     public void GrantRole(Role role) {

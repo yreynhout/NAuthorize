@@ -23,16 +23,16 @@ namespace NAuthorize.Application {
       _userGroupRepository = userGroupRepository;
     }
 
-    public void Authorize(UserId account, object message) {
-      var decider = GetDeciderForMessage(account);
+    public void Authorize(UserId user, object message) {
+      var decider = GetDeciderForMessage(user);
       if (!decider.AreAllAllowed(_resolver.ResolvePermission(message))) {
-        throw new SecurityException(string.Format("Yo bro, u do not have permission to do {0}", message.GetType()));
+        throw new SecurityException(string.Format("Yo bro, u do not have permission to {0}", message.GetType().Name.ToLowerInvariant()));
       }
     }
 
-    IAccessDecider GetDeciderForMessage(UserId account) {
+    IAccessDecider GetDeciderForMessage(UserId userId) {
       var combinator = new AccessDecisionCombinator();
-      var user = _userRepository.Get(account);
+      var user = _userRepository.Get(userId);
       user.CombineDecisions(combinator, _roleRepository, _userGroupRepository);
       return combinator.BuildDecider();
     }

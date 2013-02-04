@@ -49,8 +49,8 @@
     <Compile Include="Application\ConventionalAdministrativePermissionResolver.cs" />
     <Compile Include="Application\RoleApplicationService.cs" />
     <Compile Include="Application\UserGroupApplicationService.cs" />
-    <Compile Include="Application\SecurityEnvelope.cs" />
-    <Compile Include="Application\SecurityEnvelopeHandler.cs" />
+    <Compile Include="Application\AuthorizationEnvelope.cs" />
+    <Compile Include="Application\AuthorizationEnvelopeHandler.cs" />
     <Compile Include="Application\UserApplicationService.cs" />
     <Compile Include="IAccessDecider.cs" />
     <Compile Include="IAccessDecisionCombinator.cs" />
@@ -95,8 +95,9 @@
     <Compile Include="UserGroupId.cs" />
     <Compile Include="RoleId.cs" />
     <Compile Include="User.cs" />
+    <Compile Include="UserGroupIdentifier.cs" />
     <Compile Include="UserId.cs" />
-    <Compile Include="UserName.cs" />
+    <Compile Include="UserIdentifier.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

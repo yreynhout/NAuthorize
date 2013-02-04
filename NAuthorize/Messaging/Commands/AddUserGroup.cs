@@ -3,11 +3,11 @@ using System;
 namespace NAuthorize.Messaging.Commands {
   public class AddUserGroup {
     public readonly Guid UserGroupId;
-    public readonly string Name;
+    public readonly Uri Identifier;
 
-    public AddUserGroup(Guid userGroupId, string name) {
+    public AddUserGroup(Guid userGroupId, Uri identifier) {
       UserGroupId = userGroupId;
-      Name = name;
+      Identifier = identifier;
     }
   }
 }
