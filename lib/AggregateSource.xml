@@ -19,7 +19,7 @@
             Initializes a new instance of the <see cref="T:AggregateSource.Aggregate"/> class.
             </summary>
             <param name="id">The aggregate identifier.</param>
-            <param name="version">The aggregate version.</param>
+            <param name="expectedVersion">The expected aggregate version.</param>
             <param name="root">The aggregate root entity.</param>
             <exception cref="T:System.ArgumentNullException">Thrown when the <paramref name="root"/> is null.</exception>
         </member>
@@ -31,7 +31,7 @@
             The aggregate identifier.
             </value>
         </member>
-        <member name="P:AggregateSource.Aggregate.Version">
+        <member name="P:AggregateSource.Aggregate.ExpectedVersion">
             <summary>
             Gets the aggregate version.
             </summary>
@@ -233,11 +233,6 @@
             <summary>
               Overrides the current thread's CurrentUICulture property for all
               resource lookups using this strongly typed resource class.
-            </summary>
-        </member>
-        <member name="P:AggregateSource.Properties.Resources.Aggregate_VersionGreaterThanOrEqualToInitialVersion">
-            <summary>
-              Looks up a localized string similar to The version must be greater than or equal to {0}..
             </summary>
         </member>
         <member name="P:AggregateSource.Properties.Resources.AggregateNotFoundException_DefaultMessage">
