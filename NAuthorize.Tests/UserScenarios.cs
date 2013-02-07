@@ -10,8 +10,19 @@ namespace NAuthorize.Tests {
     public static readonly Guid UserId = Guid.NewGuid();
     public static readonly Guid RoleId = Guid.NewGuid();
 
+    //[Test]
+    //public void when_creating_a_new_user() {
+    //  Scenario.
+    //    Given(UserId,
+    //          new AddedUser(UserId, new Uri("urn:windows:sid:S-1-2-3"))).
+    //    When(new GrantRoleToUser(UserId, RoleId)).
+    //    Then(UserId,
+    //         new RoleGrantedToUser(UserId, RoleId)).
+    //    Assert();
+    //}
+
     [Test]
-    public void when_creating_a_new_user() {
+    public void when_granting_a_role_to_a_user() {
       Scenario.
         Given(UserId,
               new AddedUser(UserId, new Uri("urn:windows:sid:S-1-2-3"))).
