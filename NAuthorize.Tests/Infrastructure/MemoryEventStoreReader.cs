@@ -1,7 +1,7 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
-namespace NAuthorize.Tests {
+namespace NAuthorize.Tests.Infrastructure {
   public class MemoryEventStoreReader {
     readonly Dictionary<Guid, List<object>> _storage;
 

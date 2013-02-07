@@ -1,0 +1,138 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>AggregateSource.Testing</name>
+    </assembly>
+    <members>
+        <member name="T:AggregateSource.Testing.IGivenStateBuilder">
+            <summary>
+            The given state within the test specification building process.
+            </summary>
+        </member>
+        <member name="M:AggregateSource.Testing.IGivenStateBuilder.Given(System.Guid,System.Object[])">
+            <summary>
+            Given the following events occured.
+            </summary>
+            <param name="id">The aggregate the events occured to.</param>
+            <param name="events">The events that occurred.</param>
+            <returns>A builder continuation.</returns>
+        </member>
+        <member name="M:AggregateSource.Testing.IGivenStateBuilder.When(System.Object)">
+            <summary>
+            When a command occurs.
+            </summary>
+            <param name="message">The command message.</param>
+            <returns>A builder continuation.</returns>
+        </member>
+        <member name="T:AggregateSource.Testing.IThenStateBuilder">
+            <summary>
+            The then state within the test specification building process.
+            </summary>
+        </member>
+        <member name="M:AggregateSource.Testing.IThenStateBuilder.Then(System.Guid,System.Object[])">
+            <summary>
+            Then events should have occurred.
+            </summary>
+            <param name="id">The aggregate those events should have occurred to.</param>
+            <param name="events">The events that should have occurred.</param>
+            <returns>A builder continuation.</returns>
+        </member>
+        <member name="M:AggregateSource.Testing.IThenStateBuilder.Build">
+            <summary>
+            Builds the test specification thus far.
+            </summary>
+            <returns>The test specification.</returns>
+        </member>
+        <member name="T:AggregateSource.Testing.IThrowStateBuilder">
+            <summary>
+            The throw state within the test specification building process.
+            </summary>
+        </member>
+        <member name="M:AggregateSource.Testing.IThrowStateBuilder.Build">
+            <summary>
+            Builds the test specification thus far.
+            </summary>
+            <returns>The test specification.</returns>
+        </member>
+        <member name="T:AggregateSource.Testing.IWhenStateBuilder">
+            <summary>
+            The when state within the test specification building process.
+            </summary>
+        </member>
+        <member name="M:AggregateSource.Testing.IWhenStateBuilder.Then(System.Guid,System.Object[])">
+            <summary>
+            Then events should have occurred.
+            </summary>
+            <param name="id">The aggregate those events should have occurred to.</param>
+            <param name="events">The events that should have occurred.</param>
+            <returns>A builder continuation.</returns>
+        </member>
+        <member name="M:AggregateSource.Testing.IWhenStateBuilder.Throws(System.Exception)">
+            <summary>
+            Throws an exception.
+            </summary>
+            <param name="exception">The exception thrown.</param>
+            <returns>A builder continuation.</returns>
+        </member>
+        <member name="M:AggregateSource.Testing.IWhenStateBuilder.Build">
+            <summary>
+            Builds the test specification thus far.
+            </summary>
+            <returns>The test specification.</returns>
+        </member>
+        <member name="T:AggregateSource.Testing.Scenario">
+            <summary>
+            The given-when-then test specification builder bootstrapper.
+            </summary>
+        </member>
+        <member name="M:AggregateSource.Testing.Scenario.Given(System.Guid,System.Object[])">
+            <summary>
+            Given the following events occured.
+            </summary>
+            <param name="id">The aggregate the events occured to.</param>
+            <param name="events">The events that occurred.</param>
+            <returns>A builder continuation.</returns>
+        </member>
+        <member name="M:AggregateSource.Testing.Scenario.When(System.Object)">
+            <summary>
+            When a command occurs.
+            </summary>
+            <param name="message">The command message.</param>
+            <returns>A builder continuation.</returns>
+        </member>
+        <member name="T:AggregateSource.Testing.TestSpecification">
+            <summary>
+            Represents a test specification.
+            </summary>
+        </member>
+        <member name="M:AggregateSource.Testing.TestSpecification.#ctor(System.Tuple{System.Guid,System.Object}[],System.Object,System.Tuple{System.Guid,System.Object}[],System.Exception)">
+            <summary>
+            Initializes a new <see cref="T:AggregateSource.Testing.TestSpecification"/> instance.
+            </summary>
+            <param name="givens">The specification givens.</param>
+            <param name="when">The specification when.</param>
+            <param name="thens">The specification thens.</param>
+            <param name="throws">The specification exception thrown.</param>
+        </member>
+        <member name="P:AggregateSource.Testing.TestSpecification.Givens">
+            <summary>
+            The givens.
+            </summary>
+        </member>
+        <member name="P:AggregateSource.Testing.TestSpecification.When">
+            <summary>
+            The when
+            </summary>
+        </member>
+        <member name="P:AggregateSource.Testing.TestSpecification.Thens">
+            <summary>
+            The thens.
+            </summary>
+        </member>
+        <member name="P:AggregateSource.Testing.TestSpecification.Throws">
+            <summary>
+            The thrown exception.
+            </summary>
+        </member>
+    </members>
+</doc>

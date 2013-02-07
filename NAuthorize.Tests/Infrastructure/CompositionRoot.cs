@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -7,7 +7,7 @@ using Autofac;
 using NAuthorize.Application;
 using NAuthorize.Messaging.Commands;
 
-namespace NAuthorize.Tests {
+namespace NAuthorize.Tests.Infrastructure {
   public static class CompositionRoot {
     public static readonly ILifetimeScope Instance = Compose();
 
@@ -28,7 +28,7 @@ namespace NAuthorize.Tests {
         RegisterType<MemoryEventStoreReader>().
         InstancePerLifetimeScope();
       builder.
-        Register<Func<Guid, Tuple<Int32, IEnumerable<object>>>>(
+        Register<Func<Guid, Tuple<int, IEnumerable<object>>>>(
           context => 
             context.Resolve<MemoryEventStoreReader>().Read).
         InstancePerLifetimeScope();

@@ -1,7 +1,7 @@
-﻿using System;
+using System;
 using NAuthorize.Application;
 
-namespace NAuthorize.Tests {
+namespace NAuthorize.Tests.Infrastructure {
   public class HandlerAdapter<T> : IHandle<object> {
     readonly IHandle<T> _handler;
 

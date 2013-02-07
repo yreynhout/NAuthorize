@@ -1,4 +1,4 @@
-﻿//VERSION 1.6.0.0
+//VERSION 1.6.0.0
 //http://comparenetobjects.codeplex.com/
 
 //Uncomment to see breadcrumb messages in the debug window
@@ -8,16 +8,18 @@
 //#define USE_SETTINGS
 
 #region Includes
+
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 using System.Globalization;
 using System.Linq;
 using System.Net;
-using System.Text;
 using System.Reflection;
-using System.Collections;
+using System.Text;
 #if !SILVERLIGHT
-using System.Data;
+
 #endif
 
 #if USE_SETTINGS
@@ -78,7 +80,7 @@ using KellermanSoftware.CompareNETObjects.Properties;
 //(E) The software is licensed "as-is." You bear the risk of using it. The contributors give no express warranties, guarantees or conditions. You may have additional consumer rights under your local laws which this license cannot change. To the extent permitted under your local laws, the contributors exclude the implied warranties of merchantability, fitness for a particular purpose and non-infringement.
 #endregion
 
-namespace KellermanSoftware.CompareNetObjects {
+namespace NAuthorize.Tests.Infrastructure {
   /// <summary>
   /// Class that allows comparison of two objects of the same type to each other.  Supports classes, lists, arrays, dictionaries, child comparison and more.
   /// </summary>

@@ -31,6 +31,7 @@ namespace NAuthorize {
 
     public void RevokeRole(Role role) {
       ThrowIfDisabled();
+      ThrowIfRoleNotGranted(role);
       Apply(
         new RoleRevokedFromUser(Id, role.Id));
     }
@@ -49,6 +50,11 @@ namespace NAuthorize {
       }
     }
 
+    void ThrowIfRoleNotGranted(Role role) {
+      if (!_roles.Contains(role.Id))
+        throw new Exception("Yo bro, this role was never granted in the first place!");
+    }
+    
     void ThrowIfDisabled() {
       if (_disabled)
         throw new Exception("Yo bro, you can't mutate this thing. It's been disabled!");
