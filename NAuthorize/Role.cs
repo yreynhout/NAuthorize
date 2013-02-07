@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using AggregateSource;
 using NAuthorize.Messaging.Events;
 
@@ -39,10 +40,9 @@ namespace NAuthorize {
 
     public void AddPermission(PermissionId permissionId) {
       ThrowIfArchived();
-      if (IsUnknownPermission(permissionId)) {
-        Apply(
-          new AddedPermissionToRole(Id, permissionId));
-      }
+      ThrowIfPermissionKnown(permissionId);
+      Apply(
+        new AddedPermissionToRole(Id, permissionId));
     }
 
     public void AllowPermissions(IEnumerable<PermissionId> permissionIds) {
@@ -53,26 +53,23 @@ namespace NAuthorize {
 
     public void AllowPermission(PermissionId permissionId) {
       ThrowIfArchived();
-      if (IsKnownPermission(permissionId)) {
-        Apply(
-          new RolePermissionAllowed(Id, permissionId));
-      }
+      ThrowIfPermissionUnknown(permissionId);
+      Apply(
+        new RolePermissionAllowed(Id, permissionId));
     }
 
     public void DenyPermission(PermissionId permissionId) {
       ThrowIfArchived();
-      if (IsKnownPermission(permissionId)) {
-        Apply(
-          new RolePermissionDenied(Id, permissionId));
-      }
+      ThrowIfPermissionUnknown(permissionId);
+      Apply(
+        new RolePermissionDenied(Id, permissionId));
     }
 
     public void RemovePermission(PermissionId permissionId) {
       ThrowIfArchived();
-      if (IsKnownPermission(permissionId)) {
-        Apply(
-          new RemovedPermissionFromRole(Id, permissionId));
-      }
+      ThrowIfPermissionUnknown(permissionId);
+      Apply(
+        new RemovedPermissionFromRole(Id, permissionId));
     }
 
     public void CombineDecisions(IAccessDecisionCombinator combinator) {
@@ -85,6 +82,16 @@ namespace NAuthorize {
     void ThrowIfArchived() {
       if (_archived)
         throw new Exception("Yo bro, you can't mutate this thing. It's been archived!");
+    }
+
+    void ThrowIfPermissionUnknown(PermissionId permissionId) {
+      if (IsUnknownPermission(permissionId))
+        throw new Exception("Yo bro, the permission is not known to me.");
+    }
+
+    void ThrowIfPermissionKnown(PermissionId permissionId) {
+      if (IsKnownPermission(permissionId))
+        throw new Exception("Yo bro, the permission is already known to me.");
     }
 
     bool IsUnknownPermission(PermissionId permissionId) {

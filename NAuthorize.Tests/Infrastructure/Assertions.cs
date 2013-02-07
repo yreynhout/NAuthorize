@@ -21,6 +21,11 @@ namespace NAuthorize.Tests.Infrastructure {
           storage.Add(item.Key, item.Value);
         }
 
+        if (!scope.IsRegisteredWithKey<IHandle<object>>(specification.When.GetType()))
+          NUnit.Framework.Assert.Fail(
+            "It appears you forgot to register a handler for the {0} message.",
+            specification.When.GetType().Name);
+
         scope.ResolveKeyed<IHandle<object>>(specification.When.GetType()).Handle(specification.When);
 
         var unitOfWork = scope.Resolve<UnitOfWork>();
@@ -48,6 +53,11 @@ namespace NAuthorize.Tests.Infrastructure {
         }
 
         try {
+          if (!scope.IsRegisteredWithKey<IHandle<object>>(specification.When.GetType()))
+            NUnit.Framework.Assert.Fail(
+              "It appears you forgot to register a handler for the {0} message.",
+              specification.When.GetType().Name);
+
           scope.ResolveKeyed<IHandle<object>>(specification.When.GetType()).Handle(specification.When);
           NUnit.Framework.Assert.Fail(
             "Expected the following exception to be thrown:\n\tType:{0}\n\tMessage:{1}.",
@@ -85,6 +95,11 @@ namespace NAuthorize.Tests.Infrastructure {
           ToDictionary(group => group.Key, group => group.Select(item => item.Item2).ToList())) {
           storage.Add(item.Key, item.Value);
         }
+
+        if (!scope.IsRegisteredWithKey<IHandle<object>>(specification.When.GetType()))
+          NUnit.Framework.Assert.Fail(
+            "It appears you forgot to register a handler for the {0} message.",
+            specification.When.GetType().Name);
 
         scope.ResolveKeyed<IHandle<object>>(specification.When.GetType()).Handle(specification.When);
 

@@ -58,6 +58,7 @@
     <Compile Include="Infrastructure\HandlerAdapter.cs" />
     <Compile Include="Infrastructure\MemoryEventStoreReader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RoleBehaviorScenarios.cs" />
     <Compile Include="UserBehaviorScenarios.cs" />
   </ItemGroup>
   <ItemGroup>
