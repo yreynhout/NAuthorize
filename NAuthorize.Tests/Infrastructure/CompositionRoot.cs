@@ -6,6 +6,7 @@ using AggregateSource;
 using Autofac;
 using NAuthorize.Application;
 using NAuthorize.Messaging.Commands;
+using StreamSource;
 
 namespace NAuthorize.Tests.Infrastructure {
   public static class CompositionRoot {

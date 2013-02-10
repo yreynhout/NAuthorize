@@ -190,9 +190,37 @@
             Clears the state changes.
             </summary>
         </member>
+        <member name="T:AggregateSource.IAsyncRepository`1">
+            <summary>
+            Represents a virtual, asynchronously accessible collection of <typeparamref name="TAggregateRoot"/>.
+            </summary>
+            <typeparam name="TAggregateRoot">The type of the aggregate root in this collection.</typeparam>
+        </member>
+        <member name="M:AggregateSource.IAsyncRepository`1.GetAsync(System.Guid)">
+            <summary>
+            Gets the aggregate root entity associated with the specified aggregate id.
+            </summary>
+            <param name="id">The aggregate id.</param>
+            <returns>A future instance of <typeparamref name="TAggregateRoot"/>.</returns>
+            <exception cref="T:AggregateSource.AggregateNotFoundException">Thrown when an aggregate is not found.</exception>
+        </member>
+        <member name="M:AggregateSource.IAsyncRepository`1.GetOptionalAsync(System.Guid)">
+            <summary>
+            Attempts to get the aggregate root entity associated with the aggregate id.
+            </summary>
+            <param name="id">The aggregate id.</param>
+            <returns>The future found <typeparamref name="TAggregateRoot"/>, or a future empty if not found.</returns>
+        </member>
+        <member name="M:AggregateSource.IAsyncRepository`1.Add(System.Guid,`0)">
+            <summary>
+            Adds the aggregate root entity to this collection using the specified aggregate id.
+            </summary>
+            <param name="id">The aggregate id.</param>
+            <param name="root">The aggregate root entity.</param>
+        </member>
         <member name="T:AggregateSource.IRepository`1">
             <summary>
-            Represents a way to retrieve from and add to the collection of <typeparamref name="TAggregateRoot"/>.
+            Represents a virtual collection of <typeparamref name="TAggregateRoot"/>.
             </summary>
             <typeparam name="TAggregateRoot">The type of the aggregate root in this collection.</typeparam>
         </member>
@@ -204,13 +232,12 @@
             <returns>An instance of <typeparamref name="TAggregateRoot"/>.</returns>
             <exception cref="T:AggregateSource.AggregateNotFoundException">Thrown when an aggregate is not found.</exception>
         </member>
-        <member name="M:AggregateSource.IRepository`1.TryGet(System.Guid,`0@)">
+        <member name="M:AggregateSource.IRepository`1.GetOptional(System.Guid)">
             <summary>
             Attempts to get the aggregate root entity associated with the aggregate id.
             </summary>
             <param name="id">The aggregate id.</param>
-            <param name="root">The found <typeparamref name="TAggregateRoot"/>, or <c>null</c> if not found.</param>
-            <returns><c>true</c> if the aggregate is found, otherwise <c>false</c>.</returns>
+            <returns>The found <typeparamref name="TAggregateRoot"/>, or empty if not found.</returns>
         </member>
         <member name="M:AggregateSource.IRepository`1.Add(System.Guid,`0)">
             <summary>
@@ -218,6 +245,34 @@
             </summary>
             <param name="id">The aggregate id.</param>
             <param name="root">The aggregate root entity.</param>
+        </member>
+        <member name="T:AggregateSource.Optional`1">
+            <summary>
+            Represents an optional value.
+            </summary>
+            <typeparam name="T">The type of the optional value.</typeparam>
+        </member>
+        <member name="F:AggregateSource.Optional`1.Empty">
+            <summary>
+            The empty instance.
+            </summary>
+        </member>
+        <member name="M:AggregateSource.Optional`1.#ctor(`0)">
+            <summary>
+            Initializes a new <see cref="T:AggregateSource.Optional`1"/> instance.
+            </summary>
+            <param name="value">The value to initialize with.</param>
+        </member>
+        <member name="P:AggregateSource.Optional`1.HasValue">
+            <summary>
+            Gets an indication if this instance has a value.
+            </summary>
+        </member>
+        <member name="P:AggregateSource.Optional`1.Value">
+            <summary>
+            Gets the value associated with this instance.
+            </summary>
+            <exception cref="T:System.InvalidOperationException">Thrown when this instance has no value.</exception>
         </member>
         <member name="T:AggregateSource.Properties.Resources">
             <summary>
@@ -240,43 +295,10 @@
               Looks up a localized string similar to The {0} aggregate with identifier {1} could not be found. Please make sure the callsite is indeed passing in an identifier for an {0} aggregate..
             </summary>
         </member>
-        <member name="T:AggregateSource.Repository`1">
+        <member name="P:AggregateSource.Properties.Resources.Optional_NoValue">
             <summary>
-            Represents the default repository implementation.
+              Looks up a localized string similar to Optional object must have a value..
             </summary>
-            <typeparam name="TAggregateRoot">Type of the aggregate root entity.</typeparam>
-        </member>
-        <member name="M:AggregateSource.Repository`1.#ctor(System.Func{`0},AggregateSource.UnitOfWork,System.Func{System.Guid,System.Tuple{System.Int32,System.Collections.Generic.IEnumerable{System.Object}}})">
-            <summary>
-            Initializes a new instance of the <see cref="T:AggregateSource.Repository`1"/> class.
-            </summary>
-            <param name="rootFactory">The aggregate root entity factory.</param>
-            <param name="unitOfWork">The unit of work.</param>
-            <param name="eventStreamReader">The event stream reader.</param>
-            <exception cref="T:System.ArgumentNullException">Thrown when the <paramref name="rootFactory"/> or the <paramref name="unitOfWork"/> or the <paramref name="eventStreamReader"/> is null.</exception>
-        </member>
-        <member name="M:AggregateSource.Repository`1.Get(System.Guid)">
-            <summary>
-            Gets the aggregate root entity associated with the specified aggregate id.
-            </summary>
-            <param name="id">The aggregate id.</param>
-            <returns>An instance of <typeparamref name="TAggregateRoot"/>.</returns>
-            <exception cref="T:AggregateSource.AggregateNotFoundException">Thrown when an aggregate is not found.</exception>
-        </member>
-        <member name="M:AggregateSource.Repository`1.TryGet(System.Guid,`0@)">
-            <summary>
-            Attempts to get the aggregate root entity associated with the aggregate id.
-            </summary>
-            <param name="id">The aggregate id.</param>
-            <param name="root">The found <typeparamref name="TAggregateRoot"/>, or <c>null</c> if not found.</param>
-            <returns><c>true</c> if the aggregate is found, otherwise <c>false</c>.</returns>
-        </member>
-        <member name="M:AggregateSource.Repository`1.Add(System.Guid,`0)">
-            <summary>
-            Adds the aggregate root entity to this collection using the specified aggregate id.
-            </summary>
-            <param name="id">The aggregate id.</param>
-            <param name="root">The aggregate root entity.</param>
         </member>
         <member name="T:AggregateSource.UnitOfWork">
             <summary>
