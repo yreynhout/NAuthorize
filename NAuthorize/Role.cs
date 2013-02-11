@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using AggregateSource;
 using NAuthorize.Messaging.Events;
 
@@ -32,12 +31,6 @@ namespace NAuthorize {
           new ArchivedRole(Id));
     }
 
-    public void AddPermissions(IEnumerable<PermissionId> permissionIds) {
-      foreach (var permissionId in permissionIds) {
-        AddPermission(permissionId);
-      }
-    }
-
     public void AddPermission(PermissionId permissionId) {
       ThrowIfArchived();
       ThrowIfPermissionKnown(permissionId);
@@ -54,15 +47,17 @@ namespace NAuthorize {
     public void AllowPermission(PermissionId permissionId) {
       ThrowIfArchived();
       ThrowIfPermissionUnknown(permissionId);
-      Apply(
-        new RolePermissionAllowed(Id, permissionId));
+      if(!IsPermissionAllowed(permissionId))
+        Apply(
+          new RolePermissionAllowed(Id, permissionId));
     }
 
     public void DenyPermission(PermissionId permissionId) {
       ThrowIfArchived();
       ThrowIfPermissionUnknown(permissionId);
-      Apply(
-        new RolePermissionDenied(Id, permissionId));
+      if(!IsPermissionDenied(permissionId))
+        Apply(
+          new RolePermissionDenied(Id, permissionId));
     }
 
     public void RemovePermission(PermissionId permissionId) {
@@ -100,6 +95,14 @@ namespace NAuthorize {
 
     bool IsKnownPermission(PermissionId permissionId) {
       return _permissions.Exists(permission => permission.PermissionId == permissionId);
+    }
+
+    bool IsPermissionAllowed(PermissionId permissionId) {
+      return _permissions.Find(permission => permission.PermissionId == permissionId).IsAllowed();
+    }
+
+    bool IsPermissionDenied(PermissionId permissionId) {
+      return _permissions.Find(permission => permission.PermissionId == permissionId).IsDenied();
     }
 
     // State
@@ -165,6 +168,14 @@ namespace NAuthorize {
 
       public void CombineDecision(IAccessDecisionCombinator combinator) {
         combinator.CombineDecision(_permissionId, _accessDecision);
+      }
+
+      public bool IsAllowed() {
+        return _accessDecision == AccessDecision.Allow;
+      }
+
+      public bool IsDenied() {
+        return _accessDecision == AccessDecision.Deny;
       }
     }
   }

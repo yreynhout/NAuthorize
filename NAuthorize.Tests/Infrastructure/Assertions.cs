@@ -13,30 +13,11 @@ namespace NAuthorize.Tests.Infrastructure {
       using (var scope = CompositionRoot.Instance.BeginLifetimeScope()) {
         var specification = builder.Build();
         
-        var storage = scope.Resolve<Dictionary<Guid, List<object>>>();
-        foreach (var item in specification.
-          Givens.
-          GroupBy(given => given.Item1).
-          ToDictionary(group => group.Key, group => group.Select(item => item.Item2).ToList())) {
-          storage.Add(item.Key, item.Value);
-        }
+        StoreGivens(scope, specification.Givens);
 
-        if (!scope.IsRegisteredWithKey<IHandle<object>>(specification.When.GetType()))
-          NUnit.Framework.Assert.Fail(
-            "It appears you forgot to register a handler for the {0} message.",
-            specification.When.GetType().Name);
+        HandleWhen(scope, specification.When);
 
-        scope.ResolveKeyed<IHandle<object>>(specification.When.GetType()).Handle(specification.When);
-
-        var unitOfWork = scope.Resolve<UnitOfWork>();
-        var actualEvents = unitOfWork.GetChanges().Single().Root.GetChanges().ToArray();
-        var expectedEvents = specification.Thens.Select(item => item.Item2).ToArray();
-
-        var comparer = new CompareObjects();
-        if (!comparer.Compare(actualEvents, expectedEvents)) {
-          //The actual events do not match the expected events
-          NUnit.Framework.Assert.Fail(comparer.DifferencesString);
-        }
+        CompareActualAndExpectedThens(scope, specification.Thens);
       }
     }
 
@@ -44,21 +25,12 @@ namespace NAuthorize.Tests.Infrastructure {
       using (var scope = CompositionRoot.Instance.BeginLifetimeScope()) {
         var specification = builder.Throws(expectedException).Build();
 
-        var storage = scope.Resolve<Dictionary<Guid, List<object>>>();
-        foreach (var item in specification.
-          Givens.
-          GroupBy(given => given.Item1).
-          ToDictionary(group => group.Key, group => group.Select(item => item.Item2).ToList())) {
-          storage.Add(item.Key, item.Value);
-        }
+        StoreGivens(scope, specification.Givens);
 
         try {
-          if (!scope.IsRegisteredWithKey<IHandle<object>>(specification.When.GetType()))
-            NUnit.Framework.Assert.Fail(
-              "It appears you forgot to register a handler for the {0} message.",
-              specification.When.GetType().Name);
+          
+          HandleWhen(scope, specification.When);
 
-          scope.ResolveKeyed<IHandle<object>>(specification.When.GetType()).Handle(specification.When);
           NUnit.Framework.Assert.Fail(
             "Expected the following exception to be thrown:\n\tType:{0}\n\tMessage:{1}.",
             specification.Throws.GetType().Name,
@@ -88,25 +60,42 @@ namespace NAuthorize.Tests.Infrastructure {
       using (var scope = CompositionRoot.Instance.BeginLifetimeScope()) {
         var specification = builder.Build();
 
-        var storage = scope.Resolve<Dictionary<Guid, List<object>>>();
-        foreach (var item in specification.
-          Givens.
-          GroupBy(given => given.Item1).
-          ToDictionary(group => group.Key, group => group.Select(item => item.Item2).ToList())) {
-          storage.Add(item.Key, item.Value);
-        }
+        StoreGivens(scope, specification.Givens);
 
-        if (!scope.IsRegisteredWithKey<IHandle<object>>(specification.When.GetType()))
-          NUnit.Framework.Assert.Fail(
-            "It appears you forgot to register a handler for the {0} message.",
-            specification.When.GetType().Name);
-
-        scope.ResolveKeyed<IHandle<object>>(specification.When.GetType()).Handle(specification.When);
+        HandleWhen(scope, specification.When);
 
         var unitOfWork = scope.Resolve<UnitOfWork>();
-        NUnit.Framework.Assert.That(unitOfWork.GetChanges(), Is.Empty, 
+        NUnit.Framework.Assert.That(unitOfWork.GetChanges().SelectMany(aggregate => aggregate.Root.GetChanges()), Is.Empty, 
           "Expected no events but found the following events:\n\t{0}",
           string.Join(",", unitOfWork.GetChanges().SelectMany(aggregate => aggregate.Root.GetChanges()).Select(@event => @event.GetType().Name)));
+      }
+    }
+
+    static void StoreGivens(IComponentContext scope, IEnumerable<Tuple<Guid, object>> givens) {
+      var storage = scope.Resolve<Dictionary<Guid, List<object>>>();
+      foreach (var item in givens.
+        GroupBy(given => given.Item1).
+        ToDictionary(group => @group.Key, group => @group.Select(item => item.Item2).ToList())) {
+        storage.Add(item.Key, item.Value);
+      }
+    }
+
+    static void HandleWhen(IComponentContext scope, object when) {
+      if (!scope.IsRegisteredWithKey<IHandle<object>>(when.GetType()))
+        NUnit.Framework.Assert.Fail(
+          "It appears you forgot to register a handler for the {0} message.",
+          when.GetType().Name);
+      scope.ResolveKeyed<IHandle<object>>(when.GetType()).Handle(when);
+    }
+
+    static void CompareActualAndExpectedThens(IComponentContext scope, IEnumerable<Tuple<Guid, object>> thens) {
+      var unitOfWork = scope.Resolve<UnitOfWork>();
+      var actualEvents = unitOfWork.GetChanges().Single().Root.GetChanges().ToArray();
+      var expectedEvents = thens.Select(item => item.Item2).ToArray();
+
+      var comparer = new CompareObjects {MaxDifferences = Int32.MaxValue};
+      if (!comparer.Compare(actualEvents, expectedEvents)) {
+        NUnit.Framework.Assert.Fail(comparer.DifferencesString);
       }
     }
   }

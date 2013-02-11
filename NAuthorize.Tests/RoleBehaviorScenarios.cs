@@ -34,7 +34,7 @@ namespace NAuthorize.Tests {
         Assert();
     }
 
-    [Test, Ignore("Aren't we being a bit too restrictive?")]
+    [Test]
     public void when_allowing_an_allowed_permission() {
       Scenario.
         Given(RoleId,
@@ -79,7 +79,7 @@ namespace NAuthorize.Tests {
         Assert();
     }
 
-    [Test, Ignore("Aren't we being a bit too restrictive?")]
+    [Test]
     public void when_denying_a_denied_permission() {
       Scenario.
         Given(RoleId,

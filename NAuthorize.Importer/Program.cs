@@ -46,9 +46,9 @@ namespace NAuthorize.Importer {
                   var unitOfWork = new UnitOfWork();
 
                   IRepository<User> userRepository =
-                    new AggregateSource.GEventStore.Repository<User>(User.Factory, unitOfWork, connection);
+                    new Repository<User>(User.Factory, unitOfWork, connection);
                   IRepository<Role> roleRepository =
-                    new AggregateSource.GEventStore.Repository<Role>(Role.Factory, unitOfWork, connection);
+                    new Repository<Role>(Role.Factory, unitOfWork, connection);
                   var service = new UserApplicationService(userRepository, roleRepository);
                   service.Handle(record.ToCommand());
                   if (unitOfWork.HasChanges()) {
