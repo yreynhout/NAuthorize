@@ -7,5 +7,9 @@ namespace NAuthorize.Messaging.Commands {
     public DisableUser(Guid userId) {
       UserId = userId;
     }
+
+    public override string ToString() {
+      return string.Format("Disabling user with id {0}", UserId);
+    }
   }
 }

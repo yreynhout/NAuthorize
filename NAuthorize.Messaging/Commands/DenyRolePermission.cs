@@ -9,5 +9,9 @@ namespace NAuthorize.Messaging.Commands {
       RoleId = roleId;
       PermissionId = permissionId;
     }
+
+    public override string ToString() {
+      return string.Format("Deny permission {0} in role with id {1}", PermissionId, RoleId);
+    }
   }
 }

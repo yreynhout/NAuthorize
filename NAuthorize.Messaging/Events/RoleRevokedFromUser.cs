@@ -9,5 +9,9 @@ namespace NAuthorize.Messaging.Events {
       UserId = userId;
       RoleId = roleId;
     }
+
+    public override string ToString() {
+      return string.Format("Revoked role with id {0} from user with id {1}", RoleId, UserId);
+    }
   }
 }

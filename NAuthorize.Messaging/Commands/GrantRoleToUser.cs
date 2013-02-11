@@ -9,5 +9,9 @@ namespace NAuthorize.Messaging.Commands {
       UserId = userId;
       RoleId = roleId;
     }
+
+    public override string ToString() {
+      return string.Format("Granting role with id {0} to user with id {1}", RoleId, UserId);
+    }
   }
 }
