@@ -29,7 +29,7 @@ namespace NAuthorize.Tests {
           new AddedRole(RoleId, RoleName),
           new AddedPermissionToRole(RoleId, PermissionId)).
         When(new AllowRolePermission(RoleId, PermissionId)).
-        Then(RoleId, 
+        Then(RoleId,
           new RolePermissionAllowed(RoleId, PermissionId)).
         Assert();
     }

@@ -158,6 +158,10 @@ namespace NAuthorize {
         get { return _permissionId; }
       }
 
+      public AccessDecision AccessDecision {
+        get { return _accessDecision; }
+      }
+
       public void Allow() {
         _accessDecision = AccessDecision.Allow;
       }
@@ -167,7 +171,7 @@ namespace NAuthorize {
       }
 
       public void CombineDecision(IAccessDecisionCombinator combinator) {
-        combinator.CombineDecision(_permissionId, _accessDecision);
+        combinator.CombineDecision(_permissionId, AccessDecision);
       }
 
       public bool IsAllowed() {

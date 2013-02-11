@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using AggregateSource;
 using AggregateSource.Testing;
@@ -12,7 +13,6 @@ namespace NAuthorize.Tests.Infrastructure {
     public static void Assert(this IThenStateBuilder builder) {
       using (var scope = CompositionRoot.Instance.BeginLifetimeScope()) {
         var specification = builder.Build();
-        
         StoreGivens(scope, specification.Givens);
 
         HandleWhen(scope, specification.When);
