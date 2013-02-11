@@ -9,5 +9,9 @@ namespace NAuthorize.Messaging.Commands {
       RoleId = roleId;
       Name = name;
     }
+
+    public override string ToString() {
+      return string.Format("Adding role {0} with id {1}", Name, RoleId);
+    }
   }
 }

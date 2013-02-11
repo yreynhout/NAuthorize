@@ -9,5 +9,9 @@ namespace NAuthorize.Messaging.Events {
       RoleId = roleId;
       PermissionId = permissionId;
     }
+
+    public override string ToString() {
+      return string.Format("Allowed permission {0} in role with id {1}", PermissionId, RoleId);
+    }
   }
 }

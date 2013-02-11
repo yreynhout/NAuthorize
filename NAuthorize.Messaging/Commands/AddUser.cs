@@ -9,5 +9,9 @@ namespace NAuthorize.Messaging.Commands {
       UserId = userId;
       Identifier = identifier;
     }
+
+    public override string ToString() {
+      return string.Format("Adding user {0} with id {1}", Identifier, UserId);
+    }
   }
 }

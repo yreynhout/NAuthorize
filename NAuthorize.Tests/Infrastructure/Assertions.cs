@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using AggregateSource;
 using AggregateSource.Testing;
@@ -12,7 +13,9 @@ namespace NAuthorize.Tests.Infrastructure {
     public static void Assert(this IThenStateBuilder builder) {
       using (var scope = CompositionRoot.Instance.BeginLifetimeScope()) {
         var specification = builder.Build();
-        
+        using(var writer = File.AppendText("Specifications.md"))
+          new SpecificationMarkdownWriter(writer).Write(specification);
+
         var storage = scope.Resolve<Dictionary<Guid, List<object>>>();
         foreach (var item in specification.
           Givens.
@@ -34,7 +37,6 @@ namespace NAuthorize.Tests.Infrastructure {
 
         var comparer = new CompareObjects();
         if (!comparer.Compare(actualEvents, expectedEvents)) {
-          //The actual events do not match the expected events
           NUnit.Framework.Assert.Fail(comparer.DifferencesString);
         }
       }
@@ -43,6 +45,8 @@ namespace NAuthorize.Tests.Infrastructure {
     public static void AssertThrows(this IWhenStateBuilder builder, Exception expectedException) {
       using (var scope = CompositionRoot.Instance.BeginLifetimeScope()) {
         var specification = builder.Throws(expectedException).Build();
+        using (var writer = File.AppendText("Specifications.md"))
+          new SpecificationMarkdownWriter(writer).Write(specification);
 
         var storage = scope.Resolve<Dictionary<Guid, List<object>>>();
         foreach (var item in specification.
@@ -59,6 +63,7 @@ namespace NAuthorize.Tests.Infrastructure {
               specification.When.GetType().Name);
 
           scope.ResolveKeyed<IHandle<object>>(specification.When.GetType()).Handle(specification.When);
+
           NUnit.Framework.Assert.Fail(
             "Expected the following exception to be thrown:\n\tType:{0}\n\tMessage:{1}.",
             specification.Throws.GetType().Name,
@@ -87,6 +92,8 @@ namespace NAuthorize.Tests.Infrastructure {
     public static void AssertNothingHappened(this IWhenStateBuilder builder) {
       using (var scope = CompositionRoot.Instance.BeginLifetimeScope()) {
         var specification = builder.Build();
+        using (var writer = File.AppendText("Specifications.md"))
+          new SpecificationMarkdownWriter(writer).Write(specification);
 
         var storage = scope.Resolve<Dictionary<Guid, List<object>>>();
         foreach (var item in specification.

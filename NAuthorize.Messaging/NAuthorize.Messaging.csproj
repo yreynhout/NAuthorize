@@ -48,7 +48,6 @@
     <Compile Include="Commands\GrantRoleToUser.cs" />
     <Compile Include="Commands\RemovePermissionFromRole.cs" />
     <Compile Include="Commands\RevokeRoleFromUser.cs" />
-    <Compile Include="Commands\RevokeRoleFromUserGroup.cs" />
     <Compile Include="Events\AddedPermissionToRole.cs" />
     <Compile Include="Events\AddedRole.cs" />
     <Compile Include="Events\AddedUser.cs" />

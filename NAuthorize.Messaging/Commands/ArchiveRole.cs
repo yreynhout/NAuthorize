@@ -7,5 +7,9 @@ namespace NAuthorize.Messaging.Commands {
     public ArchiveRole(Guid roleId) {
       RoleId = roleId;
     }
+
+    public override string ToString() {
+      return string.Format("Archiving role with id {0}", RoleId);
+    }
   }
 }

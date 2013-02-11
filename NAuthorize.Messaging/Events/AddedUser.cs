@@ -13,5 +13,9 @@ namespace NAuthorize.Messaging.Events {
       UserId = userId;
       Identifier = identifier;
     }
+
+    public override string ToString() {
+      return string.Format("Added user {0} with id {1}", Identifier, UserId);
+    }
   }
 }

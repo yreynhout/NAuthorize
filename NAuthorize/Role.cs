@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using AggregateSource;
 using NAuthorize.Messaging.Events;
 
@@ -54,15 +53,17 @@ namespace NAuthorize {
     public void AllowPermission(PermissionId permissionId) {
       ThrowIfArchived();
       ThrowIfPermissionUnknown(permissionId);
-      Apply(
-        new RolePermissionAllowed(Id, permissionId));
+      if(!IsPermissionAllowed(permissionId))
+        Apply(
+          new RolePermissionAllowed(Id, permissionId));
     }
 
     public void DenyPermission(PermissionId permissionId) {
       ThrowIfArchived();
       ThrowIfPermissionUnknown(permissionId);
-      Apply(
-        new RolePermissionDenied(Id, permissionId));
+      if(!IsPermissionDenied(permissionId))
+        Apply(
+          new RolePermissionDenied(Id, permissionId));
     }
 
     public void RemovePermission(PermissionId permissionId) {
@@ -100,6 +101,18 @@ namespace NAuthorize {
 
     bool IsKnownPermission(PermissionId permissionId) {
       return _permissions.Exists(permission => permission.PermissionId == permissionId);
+    }
+
+    bool IsPermissionAllowed(PermissionId permissionId) {
+      return _permissions.
+        Find(permission => permission.PermissionId == permissionId).
+        AccessDecision == AccessDecision.Allow;
+    }
+
+    bool IsPermissionDenied(PermissionId permissionId) {
+      return _permissions.
+        Find(permission => permission.PermissionId == permissionId).
+        AccessDecision == AccessDecision.Deny;
     }
 
     // State
@@ -155,6 +168,10 @@ namespace NAuthorize {
         get { return _permissionId; }
       }
 
+      public AccessDecision AccessDecision {
+        get { return _accessDecision; }
+      }
+
       public void Allow() {
         _accessDecision = AccessDecision.Allow;
       }
@@ -164,7 +181,7 @@ namespace NAuthorize {
       }
 
       public void CombineDecision(IAccessDecisionCombinator combinator) {
-        combinator.CombineDecision(_permissionId, _accessDecision);
+        combinator.CombineDecision(_permissionId, AccessDecision);
       }
     }
   }

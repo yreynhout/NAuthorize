@@ -37,7 +37,7 @@
             <param name="events">The events that should have occurred.</param>
             <returns>A builder continuation.</returns>
         </member>
-        <member name="M:AggregateSource.Testing.IThenStateBuilder.Build">
+        <member name="M:AggregateSource.Testing.IThenStateBuilder.Build(System.String)">
             <summary>
             Builds the test specification thus far.
             </summary>
@@ -48,7 +48,7 @@
             The throw state within the test specification building process.
             </summary>
         </member>
-        <member name="M:AggregateSource.Testing.IThrowStateBuilder.Build">
+        <member name="M:AggregateSource.Testing.IThrowStateBuilder.Build(System.String)">
             <summary>
             Builds the test specification thus far.
             </summary>
@@ -74,7 +74,7 @@
             <param name="exception">The exception thrown.</param>
             <returns>A builder continuation.</returns>
         </member>
-        <member name="M:AggregateSource.Testing.IWhenStateBuilder.Build">
+        <member name="M:AggregateSource.Testing.IWhenStateBuilder.Build(System.String)">
             <summary>
             Builds the test specification thus far.
             </summary>
@@ -105,14 +105,20 @@
             Represents a test specification.
             </summary>
         </member>
-        <member name="M:AggregateSource.Testing.TestSpecification.#ctor(System.Tuple{System.Guid,System.Object}[],System.Object,System.Tuple{System.Guid,System.Object}[],System.Exception)">
+        <member name="M:AggregateSource.Testing.TestSpecification.#ctor(System.String,System.Tuple{System.Guid,System.Object}[],System.Object,System.Tuple{System.Guid,System.Object}[],System.Exception)">
             <summary>
             Initializes a new <see cref="T:AggregateSource.Testing.TestSpecification"/> instance.
             </summary>
+            <param name="name">The specification name.</param>
             <param name="givens">The specification givens.</param>
             <param name="when">The specification when.</param>
             <param name="thens">The specification thens.</param>
             <param name="throws">The specification exception thrown.</param>
+        </member>
+        <member name="P:AggregateSource.Testing.TestSpecification.Name">
+            <summary>
+            The name.
+            </summary>
         </member>
         <member name="P:AggregateSource.Testing.TestSpecification.Givens">
             <summary>

@@ -13,5 +13,9 @@ namespace NAuthorize.Messaging.Events {
       RoleId = roleId;
       Name = name;
     }
+
+    public override string ToString() {
+      return string.Format("Added role {0} with id {1}", Name, RoleId);
+    }
   }
 }
