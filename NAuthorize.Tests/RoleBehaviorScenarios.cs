@@ -8,14 +8,15 @@ using NUnit.Framework;
 namespace NAuthorize.Tests {
   [TestFixture]
   public class RoleBehaviorScenarios {
-    static readonly Guid RoleId = Guid.NewGuid();
+    static readonly RoleId RoleId = new RoleId(Guid.NewGuid());
     const string RoleName = "Administrator";
     static readonly Uri PermissionId = new Uri("urn:permission:123");
     static readonly Uri UnknownPermissionId = new Uri("urn:permission:456");
 
+    // ReSharper disable InconsistentNaming
     [Test]
     public void when_adding_a_new_role() {
-      Scenario.
+      new Scenario().
         When(new AddRole(RoleId, RoleName)).
         Then(RoleId, 
           new AddedRole(RoleId, RoleName)).
@@ -24,7 +25,7 @@ namespace NAuthorize.Tests {
 
     [Test]
     public void when_allowing_a_permission() {
-      Scenario.
+      new Scenario().
         Given(RoleId, 
           new AddedRole(RoleId, RoleName),
           new AddedPermissionToRole(RoleId, PermissionId)).
@@ -36,7 +37,7 @@ namespace NAuthorize.Tests {
 
     [Test]
     public void when_allowing_an_allowed_permission() {
-      Scenario.
+      new Scenario().
         Given(RoleId,
           new AddedRole(RoleId, RoleName),
           new AddedPermissionToRole(RoleId, PermissionId),
@@ -47,7 +48,7 @@ namespace NAuthorize.Tests {
 
     [Test]
     public void when_denying_an_allowed_permission() {
-      Scenario.
+      new Scenario().
         Given(RoleId,
           new AddedRole(RoleId, RoleName),
           new AddedPermissionToRole(RoleId, PermissionId),
@@ -60,7 +61,7 @@ namespace NAuthorize.Tests {
 
     [Test]
     public void when_allowing_an_unknown_permission() {
-      Scenario.
+      new Scenario().
         Given(RoleId, 
           new AddedRole(RoleId, RoleName)).
         When(new AllowRolePermission(RoleId, UnknownPermissionId)).
@@ -69,7 +70,7 @@ namespace NAuthorize.Tests {
 
     [Test]
     public void when_denying_a_permission() {
-      Scenario.
+      new Scenario().
         Given(RoleId,
           new AddedRole(RoleId, RoleName),
           new AddedPermissionToRole(RoleId, PermissionId)).
@@ -81,7 +82,7 @@ namespace NAuthorize.Tests {
 
     [Test]
     public void when_denying_a_denied_permission() {
-      Scenario.
+      new Scenario().
         Given(RoleId,
           new AddedRole(RoleId, RoleName),
           new AddedPermissionToRole(RoleId, PermissionId),
@@ -92,7 +93,7 @@ namespace NAuthorize.Tests {
 
     [Test]
     public void when_allowing_a_denied_permission() {
-      Scenario.
+      new Scenario().
         Given(RoleId,
           new AddedRole(RoleId, RoleName),
           new AddedPermissionToRole(RoleId, PermissionId),
@@ -105,7 +106,7 @@ namespace NAuthorize.Tests {
 
     [Test]
     public void when_denying_an_unknown_permission() {
-      Scenario.
+      new Scenario().
         Given(RoleId,
           new AddedRole(RoleId, RoleName)).
         When(new DenyRolePermission(RoleId, UnknownPermissionId)).
@@ -114,7 +115,7 @@ namespace NAuthorize.Tests {
 
     [Test]
     public void when_adding_a_permission() {
-      Scenario.
+      new Scenario().
         Given(RoleId,
           new AddedRole(RoleId, RoleName)).
         When(new AddPermissionToRole(RoleId, PermissionId)).
@@ -125,7 +126,7 @@ namespace NAuthorize.Tests {
 
     [Test]
     public void when_adding_an_added_permission() {
-      Scenario.
+      new Scenario().
         Given(RoleId,
           new AddedRole(RoleId, RoleName),
           new AddedPermissionToRole(RoleId, PermissionId)).
@@ -135,7 +136,7 @@ namespace NAuthorize.Tests {
 
     [Test]
     public void when_removing_a_permission() {
-      Scenario.
+      new Scenario().
         Given(RoleId,
           new AddedRole(RoleId, RoleName),
           new AddedPermissionToRole(RoleId, PermissionId)).
@@ -147,7 +148,7 @@ namespace NAuthorize.Tests {
 
     [Test]
     public void when_removing_an_unknown_permission() {
-      Scenario.
+      new Scenario().
         Given(RoleId,
           new AddedRole(RoleId, RoleName)).
         When(new RemovePermissionFromRole(RoleId, UnknownPermissionId)).
@@ -156,7 +157,7 @@ namespace NAuthorize.Tests {
 
     [Test]
     public void when_removing_a_removed_permission() {
-      Scenario.
+      new Scenario().
         Given(RoleId,
           new AddedRole(RoleId, RoleName),
           new AddedPermissionToRole(RoleId, PermissionId),
@@ -167,7 +168,7 @@ namespace NAuthorize.Tests {
 
     [Test]
     public void when_archiving_a_role() {
-      Scenario.
+      new Scenario().
         Given(RoleId,
           new AddedRole(RoleId, RoleName)).
         When(new ArchiveRole(RoleId)).
@@ -178,12 +179,13 @@ namespace NAuthorize.Tests {
 
     [Test]
     public void when_archiving_an_archived_role() {
-      Scenario.
+      new Scenario().
         Given(RoleId,
           new AddedRole(RoleId, RoleName),
           new ArchivedRole(RoleId)).
         When(new ArchiveRole(RoleId)).
         AssertNothingHappened();
     }
+    // ReSharper restore InconsistentNaming
   }
 }

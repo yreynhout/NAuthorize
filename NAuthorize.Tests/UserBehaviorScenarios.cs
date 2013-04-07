@@ -8,12 +8,13 @@ using NUnit.Framework;
 namespace NAuthorize.Tests {
   [TestFixture]
   public class UserBehaviorScenarios {
-    public static readonly Guid UserId = Guid.NewGuid();
-    public static readonly Guid RoleId = Guid.NewGuid();
+    static readonly UserId UserId = new UserId(Guid.NewGuid());
+    static readonly RoleId RoleId = new RoleId(Guid.NewGuid());
 
+    // ReSharper disable InconsistentNaming
     [Test]
     public void when_creating_a_new_user() {
-      Scenario.
+      new Scenario().
         When(new AddUser(UserId, new Uri("urn:windows:sid:S-1-2-3"))).
         Then(UserId,
              new AddedUser(UserId, new Uri("urn:windows:sid:S-1-2-3"))).
@@ -22,7 +23,7 @@ namespace NAuthorize.Tests {
 
     [Test]
     public void when_granting_a_role_to_a_user() {
-      Scenario.
+      new Scenario().
         Given(UserId,
               new AddedUser(UserId, new Uri("urn:windows:sid:S-1-2-3"))).
         Given(RoleId,
@@ -35,7 +36,7 @@ namespace NAuthorize.Tests {
 
     [Test]
     public void when_granting_a_role_to_a_disabled_user() {
-      Scenario.
+      new Scenario().
         Given(UserId,
               new AddedUser(UserId, new Uri("urn:windows:sid:S-1-2-3")),
               new DisabledUser(UserId)).
@@ -47,7 +48,7 @@ namespace NAuthorize.Tests {
 
     [Test]
     public void when_revoking_a_role_that_was_never_granted_to_a_user() {
-      Scenario.
+      new Scenario().
         Given(UserId,
               new AddedUser(UserId, new Uri("urn:windows:sid:S-1-2-3"))).
         Given(RoleId,
@@ -58,7 +59,7 @@ namespace NAuthorize.Tests {
 
     [Test]
     public void when_revoking_a_role_from_a_user() {
-      Scenario.
+      new Scenario().
         Given(UserId,
               new AddedUser(UserId, new Uri("urn:windows:sid:S-1-2-3"))).
         Given(RoleId,
@@ -73,7 +74,7 @@ namespace NAuthorize.Tests {
 
     [Test]
     public void when_revoking_a_role_from_a_disabled_user() {
-      Scenario.
+      new Scenario().
         Given(UserId,
               new AddedUser(UserId, new Uri("urn:windows:sid:S-1-2-3")),
               new DisabledUser(UserId)).
@@ -87,7 +88,7 @@ namespace NAuthorize.Tests {
 
     [Test]
     public void when_disabling_a_user() {
-      Scenario.
+      new Scenario().
         Given(UserId, new AddedUser(UserId, new Uri("urn:windows:sid:S-1-2-3"))).
         When(new DisableUser(UserId)).
         Then(UserId,
@@ -97,12 +98,13 @@ namespace NAuthorize.Tests {
 
     [Test]
     public void when_disabling_a_disabled_user() {
-      Scenario.
+      new Scenario().
         Given(UserId, 
           new AddedUser(UserId, new Uri("urn:windows:sid:S-1-2-3")),
           new DisabledUser(UserId)).
         When(new DisableUser(UserId)).
         AssertNothingHappened();
     }
+    // ReSharper restore InconsistentNaming
   }
 }

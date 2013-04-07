@@ -50,7 +50,9 @@ namespace NAuthorize.Importer {
                   IRepository<Role> roleRepository =
                     new Repository<Role>(Role.Factory, unitOfWork, connection);
                   var service = new UserApplicationService(userRepository, roleRepository);
-                  service.Handle(record.ToCommand());
+                  var command = record.ToCommand();
+                  Console.WriteLine("Start handling command: {0} - {1}", command.GetType().Name, command.Identifier);
+                  service.Handle(command);
                   if (unitOfWork.HasChanges()) {
                     const int sliceEventCount = 500;
                     var aggregate = unitOfWork.GetChanges().Single();
@@ -68,12 +70,13 @@ namespace NAuthorize.Importer {
                                  into slice
                                  select slice.AsEnumerable();
                     using (var transaction = connection.StartTransaction(
-                      aggregate.GetName(), 
+                      aggregate.Identifier, 
                       aggregate.ExpectedVersion)) {
                       foreach (var slice in slices) {
                         transaction.Write(slice);
                       }
                       transaction.Commit();
+                      Console.WriteLine("Committed events for command");
                     }
                   }
 

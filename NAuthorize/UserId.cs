@@ -33,6 +33,11 @@ namespace NAuthorize {
       return id._value;
     }
 
+    public static implicit operator String(UserId id) {
+      return id._value.ToString("N");
+      //return id.ToString();
+    }
+
     public override string ToString() {
       return String.Format("User/{0}", _value.ToString().ToUpperInvariant());
     }

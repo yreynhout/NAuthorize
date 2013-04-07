@@ -18,8 +18,9 @@ namespace NAuthorize.Application {
     }
 
     public void Handle(AddRole message) {
-      _roleRepository.Add(message.RoleId,
-        new Role(new RoleId(message.RoleId), new Name(message.Name)));
+      var roleId = new RoleId(message.RoleId);
+      _roleRepository.Add(roleId,
+        new Role(roleId, new Name(message.Name)));
     }
 
     public void Handle(ArchiveRole message) {

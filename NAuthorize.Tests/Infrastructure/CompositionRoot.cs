@@ -27,11 +27,7 @@ namespace NAuthorize.Tests.Infrastructure {
         InstancePerDependency();
       builder.
         RegisterType<MemoryEventStoreReader>().
-        InstancePerLifetimeScope();
-      builder.
-        Register<Func<Guid, Tuple<int, IEnumerable<object>>>>(
-          context => 
-            context.Resolve<MemoryEventStoreReader>().Read).
+        AsImplementedInterfaces().
         InstancePerLifetimeScope();
       builder.
         RegisterInstance(User.Factory).
@@ -40,7 +36,7 @@ namespace NAuthorize.Tests.Infrastructure {
         RegisterInstance(Role.Factory).
         SingleInstance();
       builder.
-        RegisterType<Dictionary<Guid, List<object>>>().
+        RegisterType<Dictionary<string, List<object>>>().
         InstancePerLifetimeScope();
 
       foreach (var commandType in AllCommandTypes) {

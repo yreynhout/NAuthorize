@@ -19,10 +19,9 @@ namespace NAuthorize.Application {
     }
 
     public void Handle(AddUser message) {
-      _userRepository.Add(message.UserId,
-        new User(
-          new UserId(message.UserId),
-          new UserIdentifier(message.Identifier)));
+      var userId = new UserId(message.UserId);
+      _userRepository.Add(userId,
+        new User(userId, new UserIdentifier(message.Identifier)));
     }
 
     public void Handle(DisableUser message) {
@@ -30,12 +29,12 @@ namespace NAuthorize.Application {
     }
 
     public void Handle(GrantRoleToUser message) {
-      var role = _roleRepository.Get(message.RoleId);
+      var role = _roleRepository.Get(new RoleId(message.RoleId));
       ForUser(message.UserId).GrantRole(role);
     }
 
    public void Handle(RevokeRoleFromUser message) {
-      var role = _roleRepository.Get(message.RoleId);
+      var role = _roleRepository.Get(new RoleId(message.RoleId));
       ForUser(message.UserId).RevokeRole(role);
     }
 

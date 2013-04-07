@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using AggregateSource;
 using AggregateSource.Testing;
@@ -71,8 +70,8 @@ namespace NAuthorize.Tests.Infrastructure {
       }
     }
 
-    static void StoreGivens(IComponentContext scope, IEnumerable<Tuple<Guid, object>> givens) {
-      var storage = scope.Resolve<Dictionary<Guid, List<object>>>();
+    static void StoreGivens(IComponentContext scope, IEnumerable<Tuple<string, object>> givens) {
+      var storage = scope.Resolve<Dictionary<string, List<object>>>();
       foreach (var item in givens.
         GroupBy(given => given.Item1).
         ToDictionary(group => @group.Key, group => @group.Select(item => item.Item2).ToList())) {
@@ -88,7 +87,7 @@ namespace NAuthorize.Tests.Infrastructure {
       scope.ResolveKeyed<IHandle<object>>(when.GetType()).Handle(when);
     }
 
-    static void CompareActualAndExpectedThens(IComponentContext scope, IEnumerable<Tuple<Guid, object>> thens) {
+    static void CompareActualAndExpectedThens(IComponentContext scope, IEnumerable<Tuple<string, object>> thens) {
       var unitOfWork = scope.Resolve<UnitOfWork>();
       var actualEvents = unitOfWork.GetChanges().Single().Root.GetChanges().ToArray();
       var expectedEvents = thens.Select(item => item.Item2).ToArray();

@@ -4,16 +4,145 @@
         <name>AggregateSource.Testing</name>
     </assembly>
     <members>
+        <member name="T:AggregateSource.Testing.EventCentricTestResult">
+            <summary>
+            The result of an event centric test specification.
+            </summary>
+        </member>
+        <member name="M:AggregateSource.Testing.EventCentricTestResult.#ctor(AggregateSource.Testing.EventCentricTestSpecification,AggregateSource.Testing.TestResultState,System.Tuple{System.String,System.Object}[])">
+            <summary>
+            Initializes a new instance of the <see cref="T:AggregateSource.Testing.EventCentricTestResult"/> class.
+            </summary>
+            <param name="specification">The specification.</param>
+            <param name="state">The state.</param>
+            <param name="actual">The actual.</param>
+        </member>
+        <member name="P:AggregateSource.Testing.EventCentricTestResult.Specification">
+            <summary>
+            Gets the test specification associated with this result.
+            </summary>
+            <value>
+            The test specification.
+            </value>
+        </member>
+        <member name="P:AggregateSource.Testing.EventCentricTestResult.Passed">
+            <summary>
+            Gets a value indicating whether this <see cref="T:AggregateSource.Testing.EventCentricTestResult"/> has passed.
+            </summary>
+            <value>
+              <c>true</c> if passed; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:AggregateSource.Testing.EventCentricTestResult.Failed">
+            <summary>
+            Gets a value indicating whether this <see cref="T:AggregateSource.Testing.EventCentricTestResult"/> has failed.
+            </summary>
+            <value>
+              <c>true</c> if failed; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:AggregateSource.Testing.EventCentricTestResult.Buts">
+            <summary>
+            Gets the events that happened instead of the expected ones, or empty if none happened at all.
+            </summary>
+            <value>
+            The events.
+            </value>
+        </member>
+        <member name="T:AggregateSource.Testing.EventCentricTestSpecification">
+            <summary>
+            Represents an event centric test specification, meaning that the outcome revolves around events.
+            </summary>
+        </member>
+        <member name="M:AggregateSource.Testing.EventCentricTestSpecification.#ctor(System.Tuple{System.String,System.Object}[],System.Object,System.Tuple{System.String,System.Object}[])">
+            <summary>
+            Initializes a new <see cref="T:AggregateSource.Testing.EventCentricTestSpecification"/> instance.
+            </summary>
+            <param name="givens">The specification givens.</param>
+            <param name="when">The specification when.</param>
+            <param name="thens">The specification thens.</param>
+        </member>
+        <member name="M:AggregateSource.Testing.EventCentricTestSpecification.Pass">
+            <summary>
+            Returns a test result that indicates this specification has passed.
+            </summary>
+            <returns>A new <see cref="T:AggregateSource.Testing.EventCentricTestResult"/>.</returns>
+        </member>
+        <member name="M:AggregateSource.Testing.EventCentricTestSpecification.Fail">
+            <summary>
+            Returns a test result that indicates this specification has failed because nothing happened.
+            </summary>
+            <returns>A new <see cref="T:AggregateSource.Testing.EventCentricTestResult"/>.</returns>
+        </member>
+        <member name="M:AggregateSource.Testing.EventCentricTestSpecification.Fail(System.Tuple{System.String,System.Object}[])">
+            <summary>
+            Returns a test result that indicates this specification has failed because different things happened.
+            </summary>
+            <param name="actual">The actual events</param>
+            <returns>A new <see cref="T:AggregateSource.Testing.EventCentricTestResult"/>.</returns>
+        </member>
+        <member name="M:AggregateSource.Testing.EventCentricTestSpecification.Equals(AggregateSource.Testing.EventCentricTestSpecification)">
+            <summary>
+            Determines whether the specified <see cref="T:AggregateSource.Testing.EventCentricTestSpecification"/> is equal to this instance.
+            </summary>
+            <param name="other">The <see cref="T:AggregateSource.Testing.EventCentricTestSpecification"/> to compare with this instance.</param>
+            <returns>
+              <c>true</c> if the specified <see cref="T:AggregateSource.Testing.EventCentricTestSpecification"/> is equal to this instance; otherwise, <c>false</c>.
+            </returns>
+        </member>
+        <member name="M:AggregateSource.Testing.EventCentricTestSpecification.Equals(System.Object)">
+            <summary>
+            Determines whether the specified <see cref="T:System.Object"/> is equal to this instance.
+            </summary>
+            <param name="obj">The <see cref="T:System.Object"/> to compare with this instance.</param>
+            <returns>
+              <c>true</c> if the specified <see cref="T:System.Object"/> is equal to this instance; otherwise, <c>false</c>.
+            </returns>
+        </member>
+        <member name="M:AggregateSource.Testing.EventCentricTestSpecification.GetHashCode">
+            <summary>
+            Returns a hash code for this instance.
+            </summary>
+            <returns>
+            A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table. 
+            </returns>
+        </member>
+        <member name="P:AggregateSource.Testing.EventCentricTestSpecification.Givens">
+            <summary>
+            The events to arrange.
+            </summary>
+        </member>
+        <member name="P:AggregateSource.Testing.EventCentricTestSpecification.When">
+            <summary>
+            The message to act upon.
+            </summary>
+        </member>
+        <member name="P:AggregateSource.Testing.EventCentricTestSpecification.Thens">
+            <summary>
+            The expected events to assert.
+            </summary>
+        </member>
+        <member name="T:AggregateSource.Testing.IExceptionCentricTestSpecificationWriter">
+            <summary>
+            Writes test specifications for human consumption.
+            </summary>
+        </member>
+        <member name="M:AggregateSource.Testing.IExceptionCentricTestSpecificationWriter.Write(AggregateSource.Testing.ExceptionCentricTestSpecification)">
+            <summary>
+            Writes the specified test specification.
+            </summary>
+            <param name="specification">The test specification to write.</param>
+        </member>
         <member name="T:AggregateSource.Testing.IGivenStateBuilder">
             <summary>
             The given state within the test specification building process.
             </summary>
         </member>
-        <member name="M:AggregateSource.Testing.IGivenStateBuilder.Given(System.Guid,System.Object[])">
+        <member name="M:AggregateSource.Testing.IGivenStateBuilder.Given(System.String,System.Object[])">
             <summary>
             Given the following events occured.
             </summary>
-            <param name="id">The aggregate the events occured to.</param>
+            <param name="identifier">The aggregate identifier the events are to be associated with.</param>
             <param name="events">The events that occurred.</param>
             <returns>A builder continuation.</returns>
         </member>
@@ -24,20 +153,31 @@
             <param name="message">The command message.</param>
             <returns>A builder continuation.</returns>
         </member>
+        <member name="T:AggregateSource.Testing.IEventCentricTestSpecificationWriter">
+            <summary>
+            Writes test specifications for human consumption.
+            </summary>
+        </member>
+        <member name="M:AggregateSource.Testing.IEventCentricTestSpecificationWriter.Write(AggregateSource.Testing.EventCentricTestSpecification)">
+            <summary>
+            Writes the specified test specification.
+            </summary>
+            <param name="specification">The test specification to write.</param>
+        </member>
         <member name="T:AggregateSource.Testing.IThenStateBuilder">
             <summary>
             The then state within the test specification building process.
             </summary>
         </member>
-        <member name="M:AggregateSource.Testing.IThenStateBuilder.Then(System.Guid,System.Object[])">
+        <member name="M:AggregateSource.Testing.IThenStateBuilder.Then(System.String,System.Object[])">
             <summary>
             Then events should have occurred.
             </summary>
-            <param name="id">The aggregate those events should have occurred to.</param>
+            <param name="identifier">The aggregate identifier the events belong to.</param>
             <param name="events">The events that should have occurred.</param>
             <returns>A builder continuation.</returns>
         </member>
-        <member name="M:AggregateSource.Testing.IThenStateBuilder.Build(System.String)">
+        <member name="M:AggregateSource.Testing.IThenStateBuilder.Build">
             <summary>
             Builds the test specification thus far.
             </summary>
@@ -48,7 +188,7 @@
             The throw state within the test specification building process.
             </summary>
         </member>
-        <member name="M:AggregateSource.Testing.IThrowStateBuilder.Build(System.String)">
+        <member name="M:AggregateSource.Testing.IThrowStateBuilder.Build">
             <summary>
             Builds the test specification thus far.
             </summary>
@@ -59,11 +199,11 @@
             The when state within the test specification building process.
             </summary>
         </member>
-        <member name="M:AggregateSource.Testing.IWhenStateBuilder.Then(System.Guid,System.Object[])">
+        <member name="M:AggregateSource.Testing.IWhenStateBuilder.Then(System.String,System.Object[])">
             <summary>
             Then events should have occurred.
             </summary>
-            <param name="id">The aggregate those events should have occurred to.</param>
+            <param name="identifier"></param>
             <param name="events">The events that should have occurred.</param>
             <returns>A builder continuation.</returns>
         </member>
@@ -74,7 +214,7 @@
             <param name="exception">The exception thrown.</param>
             <returns>A builder continuation.</returns>
         </member>
-        <member name="M:AggregateSource.Testing.IWhenStateBuilder.Build(System.String)">
+        <member name="M:AggregateSource.Testing.IWhenStateBuilder.Build">
             <summary>
             Builds the test specification thus far.
             </summary>
@@ -85,11 +225,11 @@
             The given-when-then test specification builder bootstrapper.
             </summary>
         </member>
-        <member name="M:AggregateSource.Testing.Scenario.Given(System.Guid,System.Object[])">
+        <member name="M:AggregateSource.Testing.Scenario.Given(System.String,System.Object[])">
             <summary>
             Given the following events occured.
             </summary>
-            <param name="id">The aggregate the events occured to.</param>
+            <param name="identifier"></param>
             <param name="events">The events that occurred.</param>
             <returns>A builder continuation.</returns>
         </member>
@@ -100,44 +240,160 @@
             <param name="message">The command message.</param>
             <returns>A builder continuation.</returns>
         </member>
-        <member name="T:AggregateSource.Testing.TestSpecification">
+        <member name="T:AggregateSource.Testing.TestResultState">
             <summary>
-            Represents a test specification.
+            Enumeration of possible states a test specification result can be in.
             </summary>
         </member>
-        <member name="M:AggregateSource.Testing.TestSpecification.#ctor(System.String,System.Tuple{System.Guid,System.Object}[],System.Object,System.Tuple{System.Guid,System.Object}[],System.Exception)">
+        <member name="F:AggregateSource.Testing.TestResultState.Passed">
             <summary>
-            Initializes a new <see cref="T:AggregateSource.Testing.TestSpecification"/> instance.
+            The test specification passed
             </summary>
-            <param name="name">The specification name.</param>
+        </member>
+        <member name="F:AggregateSource.Testing.TestResultState.Failed">
+            <summary>
+            The test specification failed
+            </summary>
+        </member>
+        <member name="T:AggregateSource.Testing.TestSpecificationTextWriter">
+            <summary>
+            Writes test specifications to a <see cref="T:System.IO.TextWriter"/> for human consumption.
+            </summary>
+        </member>
+        <member name="M:AggregateSource.Testing.TestSpecificationTextWriter.#ctor(System.IO.TextWriter)">
+            <summary>
+            Initializes a new instance of <see cref="T:AggregateSource.Testing.TestSpecificationTextWriter"/>.
+            </summary>
+            <param name="writer">The text writer to write on.</param>
+        </member>
+        <member name="M:AggregateSource.Testing.TestSpecificationTextWriter.Write(AggregateSource.Testing.EventCentricTestSpecification)">
+            <summary>
+            Writes the specified test specification.
+            </summary>
+            <param name="specification">The test specification to write.</param>
+        </member>
+        <member name="M:AggregateSource.Testing.TestSpecificationTextWriter.Write(AggregateSource.Testing.ExceptionCentricTestSpecification)">
+            <summary>
+            Writes the specified test specification.
+            </summary>
+            <param name="specification">The test specification to write.</param>
+        </member>
+        <member name="T:AggregateSource.Testing.ExceptionCentricTestResult">
+            <summary>
+            The result of an exception centric test specification.
+            </summary>
+        </member>
+        <member name="M:AggregateSource.Testing.ExceptionCentricTestResult.#ctor(AggregateSource.Testing.ExceptionCentricTestSpecification,AggregateSource.Testing.TestResultState,System.Exception)">
+            <summary>
+            Initializes a new instance of the <see cref="T:AggregateSource.Testing.ExceptionCentricTestResult"/> class.
+            </summary>
+            <param name="specification">The specification.</param>
+            <param name="state">The state.</param>
+            <param name="actual">The actual.</param>
+        </member>
+        <member name="P:AggregateSource.Testing.ExceptionCentricTestResult.Specification">
+            <summary>
+            Gets the test specification associated with this result.
+            </summary>
+            <value>
+            The test specification.
+            </value>
+        </member>
+        <member name="P:AggregateSource.Testing.ExceptionCentricTestResult.Passed">
+            <summary>
+            Gets a value indicating whether this <see cref="T:AggregateSource.Testing.EventCentricTestResult"/> has passed.
+            </summary>
+            <value>
+              <c>true</c> if passed; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:AggregateSource.Testing.ExceptionCentricTestResult.Failed">
+            <summary>
+            Gets a value indicating whether this <see cref="T:AggregateSource.Testing.EventCentricTestResult"/> has failed.
+            </summary>
+            <value>
+              <c>true</c> if failed; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:AggregateSource.Testing.ExceptionCentricTestResult.But">
+            <summary>
+            Gets the exception that happened instead of the expected one, or empty if one didn't happen at all.
+            </summary>
+            <value>
+            The exception.
+            </value>
+        </member>
+        <member name="T:AggregateSource.Testing.ExceptionCentricTestSpecification">
+            <summary>
+            Represents an exception centric test specification, meaning that the outcome revolves around an exception.
+            </summary>
+        </member>
+        <member name="M:AggregateSource.Testing.ExceptionCentricTestSpecification.#ctor(System.Tuple{System.String,System.Object}[],System.Object,System.Exception)">
+            <summary>
+            Initializes a new <see cref="T:AggregateSource.Testing.ExceptionCentricTestSpecification"/> instance.
+            </summary>
             <param name="givens">The specification givens.</param>
             <param name="when">The specification when.</param>
-            <param name="thens">The specification thens.</param>
             <param name="throws">The specification exception thrown.</param>
         </member>
-        <member name="P:AggregateSource.Testing.TestSpecification.Name">
+        <member name="M:AggregateSource.Testing.ExceptionCentricTestSpecification.Pass">
             <summary>
-            The name.
+            Returns a test result that indicates this specification has passed.
+            </summary>
+            <returns>A new <see cref="T:AggregateSource.Testing.ExceptionCentricTestResult"/>.</returns>
+        </member>
+        <member name="M:AggregateSource.Testing.ExceptionCentricTestSpecification.Fail">
+            <summary>
+            Returns a test result that indicates this specification has failed.
+            </summary>
+            <returns>A new <see cref="T:AggregateSource.Testing.ExceptionCentricTestResult"/>.</returns>
+        </member>
+        <member name="M:AggregateSource.Testing.ExceptionCentricTestSpecification.Fail(System.Exception)">
+            <summary>
+            Returns a test result that indicates this specification has failed.
+            </summary>
+            <param name="actual">The actual exception thrown</param>
+            <returns>A new <see cref="T:AggregateSource.Testing.ExceptionCentricTestResult"/>.</returns>
+        </member>
+        <member name="M:AggregateSource.Testing.ExceptionCentricTestSpecification.Equals(AggregateSource.Testing.ExceptionCentricTestSpecification)">
+            <summary>
+            Determines whether the specified <see cref="T:AggregateSource.Testing.ExceptionCentricTestSpecification"/> is equal to this instance.
+            </summary>
+            <param name="other">The <see cref="T:AggregateSource.Testing.ExceptionCentricTestSpecification"/> to compare with this instance.</param>
+            <returns>
+              <c>true</c> if the specified <see cref="T:AggregateSource.Testing.ExceptionCentricTestSpecification"/> is equal to this instance; otherwise, <c>false</c>.
+            </returns>
+        </member>
+        <member name="M:AggregateSource.Testing.ExceptionCentricTestSpecification.Equals(System.Object)">
+            <summary>
+            Determines whether the specified <see cref="T:System.Object"/> is equal to this instance.
+            </summary>
+            <param name="obj">The <see cref="T:System.Object"/> to compare with this instance.</param>
+            <returns>
+              <c>true</c> if the specified <see cref="T:System.Object"/> is equal to this instance; otherwise, <c>false</c>.
+            </returns>
+        </member>
+        <member name="M:AggregateSource.Testing.ExceptionCentricTestSpecification.GetHashCode">
+            <summary>
+            Returns a hash code for this instance.
+            </summary>
+            <returns>
+            A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table. 
+            </returns>
+        </member>
+        <member name="P:AggregateSource.Testing.ExceptionCentricTestSpecification.Givens">
+            <summary>
+            The events to arrange.
             </summary>
         </member>
-        <member name="P:AggregateSource.Testing.TestSpecification.Givens">
+        <member name="P:AggregateSource.Testing.ExceptionCentricTestSpecification.When">
             <summary>
-            The givens.
+            The message to act upon.
             </summary>
         </member>
-        <member name="P:AggregateSource.Testing.TestSpecification.When">
+        <member name="P:AggregateSource.Testing.ExceptionCentricTestSpecification.Throws">
             <summary>
-            The when
-            </summary>
-        </member>
-        <member name="P:AggregateSource.Testing.TestSpecification.Thens">
-            <summary>
-            The thens.
-            </summary>
-        </member>
-        <member name="P:AggregateSource.Testing.TestSpecification.Throws">
-            <summary>
-            The thrown exception.
+            The expected exception to assert.
             </summary>
         </member>
     </members>
